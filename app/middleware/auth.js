@@ -7,10 +7,10 @@ module.exports = {
             const token = authHeader && authHeader.split(' ')[1];
             if (token == null) return res.status(401).json({ error: true, message: 'Token is missing' });
 
-            jwt.verify(token, 'secret', (err, user) => {
+            jwt.verify(token, 'secret', (err, decode) => {
                 if (err) return res.status(403).json({ error: true, message: 'Invalid token' });
 
-                req.user = user;
+                req.users = decode.users.id;
                 next();
             });
 
